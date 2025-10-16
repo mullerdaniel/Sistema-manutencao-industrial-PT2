@@ -6,6 +6,7 @@ public class MenuView {
     static Scanner input = new Scanner(System.in);
 
     FornecedorView fornecedorView = new FornecedorView();
+    MaterialView materialView = new MaterialView();
 
     // METODO PARA MENU PRINCIPAL
     public void menuPrincipal() {
@@ -30,6 +31,7 @@ public class MenuView {
             }
 
             case 2: {
+                materialView.cadastrarMaterial();
                 break;
             }
 

@@ -15,7 +15,7 @@ public class FornecedorView {
         System.out.println("\n\n--- Cadastrar Fornecedor ---\n");
 
         System.out.println("Nome: ");
-        String nome = input.nextLine().trim();
+        String nome = input.nextLine();
 
         if (nome.isEmpty()) {
             System.out.println("Erro. O nome do fornecedor não pode ser vazio.");
@@ -27,7 +27,7 @@ public class FornecedorView {
 
         while (!cnpjValido) {
             System.out.println("CNPJ: ");
-            cnpj = input.nextLine().trim();
+            cnpj = input.nextLine();
 
             if (cnpj.isEmpty()) {
                 System.out.println("\nErro. O CNPJ não pode ser vazio. Tente novamente.\n");
@@ -43,5 +43,12 @@ public class FornecedorView {
         }
 
         Fornecedor fornecedor = new Fornecedor(nome, cnpj);
+
+        try {
+            fornecedorService.cadastrarFornecedor(fornecedor);
+
+        } catch (Exception e) {
+            System.out.println("\nErro ao tentar cadastrar o fornecedor: " + e.getMessage());
+        }
     }
 }
