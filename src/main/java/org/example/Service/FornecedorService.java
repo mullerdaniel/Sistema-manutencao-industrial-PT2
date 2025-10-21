@@ -3,6 +3,7 @@ package org.example.Service;
 import org.example.Dao.FornecedorDAO;
 import org.example.Model.Fornecedor;
 import java.sql.SQLException;
+import java.util.List;
 
 public class FornecedorService {
     static FornecedorDAO fornecedorDAO = new FornecedorDAO();
@@ -12,10 +13,14 @@ public class FornecedorService {
     public static void cadastrarFornecedor(Fornecedor fornecedor) {
         try {
             fornecedorDAO.cadastrarFornecedor(fornecedor);
-            System.out.println("\nFornecedor cadastrado com sucesso!");
+            System.out.println("\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃> Fornecedor cadastrado com sucesso! <┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
 
         } catch (SQLException e) {
-            System.out.println("\nErro ao cadastrar Fornecedor");
+            System.out.println("\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃> Erro ao cadastrar Fornecedor <┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
             e.printStackTrace();
         }
     }
@@ -32,4 +37,13 @@ public class FornecedorService {
         }
     }
 
+
+    // LISTAR TODOS FORNECEDORES
+    public List<Fornecedor> listarFornecedores() throws SQLException {
+        return fornecedorDAO.listarFornecedores();
+    }
+
+    public Fornecedor buscarFornecedorPorId(int idFornecedor) throws SQLException {
+        return fornecedorDAO.buscarFornecedorPorId(idFornecedor);
+    }
 }

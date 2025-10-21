@@ -1,6 +1,6 @@
 package org.example.Model;
 
-public class NotaEntregaItem {
+public class NotaEntradaItem {
 
     private int idNotaEntrega;
     private int idMaterial;
@@ -8,7 +8,7 @@ public class NotaEntregaItem {
 
 
     // CONSTRUTOR
-    public NotaEntregaItem(int idNotaEntrega, int idMaterial, double quantidade) {
+    public NotaEntradaItem(int idNotaEntrega, double quantidade) {
         this.idNotaEntrega = idNotaEntrega;
         this.idMaterial = idMaterial;
         this.quantidade = quantidade;

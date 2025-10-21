@@ -19,6 +19,9 @@ public class Fornecedor {
         this.cnpj = cnpj;
     }
 
+    public Fornecedor() {
+
+    }
 
     // GETs e SETs
     public int getId() {

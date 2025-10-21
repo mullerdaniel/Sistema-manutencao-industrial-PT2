@@ -1,5 +1,5 @@
 # Sistema-manutencao-industrial-PT2
-
+━    ┓   ┏    ┛   ┗    ┃
 
 # Banco de Dados
 

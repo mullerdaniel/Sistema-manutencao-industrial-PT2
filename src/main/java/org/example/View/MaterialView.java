@@ -5,6 +5,8 @@ import org.example.Model.Material;
 import org.example.Service.FornecedorService;
 import org.example.Service.MaterialService;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class MaterialView {
@@ -13,7 +15,9 @@ public class MaterialView {
 
 
     public void cadastrarMaterial() {
-        System.out.println("\n\n--- Cadastrar Material ---\n");
+        System.out.println("\n\n┏━━━━━━━━━━━━━━━━━━━━━━┓");
+        System.out.println("┃> Cadastrar Material <┃");
+        System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━┛\n");
 
         System.out.println("Nome: ");
         String nome = input.nextLine();
@@ -47,9 +51,21 @@ public class MaterialView {
         } catch (Exception e) {
             System.out.println("\nErro ao tentar cadastrar o Material: " + e.getMessage());
         }
+    }
 
 
-
-
+    // LISTAR TODOS MATERIAIS
+    public void listarMateriais() throws SQLException {
+        List<Material> materiais = materialService.listarMateriais();
+        if (materiais.isEmpty()) {
+            System.out.println("\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+            System.out.println("┃> Não há Materiais cadastrados. <┃");
+            System.out.println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+        } else {
+            System.out.println("\n\nMateriais:");
+            for (Material material : materiais) {
+                System.out.println("ID: " + material.getId() + ", Nome: " + material.getNome() + ", Unidade: " + material.getUnidade() + ", Estoque" + material.getEstoque());
+            }
+        }
     }
 }
