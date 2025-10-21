@@ -8,7 +8,7 @@ public class RequisicaoItem {
 
 
     // METODO CONSTRUTOR
-    public RequisicaoItem(int idRequisicao, int idMaterial, double quantidade) {
+    public RequisicaoItem(int idRequisicao, double quantidade) {
         this.idRequisicao = idRequisicao;
         this.idMaterial = idMaterial;
         this.quantidade = quantidade;

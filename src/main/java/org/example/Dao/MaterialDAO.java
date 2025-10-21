@@ -56,4 +56,28 @@ public class MaterialDAO {
         return materiais;
     }
 
+
+    // METODO PARA LISTAR MATERIAIS COM ESTOQUE MAIOR QUE ZERO
+    public static List<Material> listarMateriaisDisponiveis() throws SQLException {
+        String query = "SELECT id, nome, unidade, estoque FROM Material WHERE estoque > 0 ORDER BY nome";
+        List<Material> materiais = new ArrayList<>();
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Material material = new Material(
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("unidade"),
+                        rs.getDouble("estoque")
+                );
+                materiais.add(material);
+            }
+        }
+        return materiais;
     }
+}
+
+

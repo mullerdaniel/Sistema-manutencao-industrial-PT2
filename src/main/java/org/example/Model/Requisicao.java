@@ -24,6 +24,15 @@ public class Requisicao {
         this.status = status;
     }
 
+    // CONSTRUTOR ADICIONADO PARA CADASTRO DE SETOR
+    public Requisicao(String setor) {
+        this.setor = setor;
+        // Definindo valores padrão para os campos restantes, se necessário,
+        // mas para o cadastro de setor, apenas 'setor' será usado pelo DAO.
+        this.dataSolicitacao = null;
+        this.status = "NAO APLICAVEL";
+    }
+
 
     // GETs e SETs
     public int getId() {
