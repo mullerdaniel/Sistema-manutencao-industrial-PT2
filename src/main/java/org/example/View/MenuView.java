@@ -1,7 +1,5 @@
 package org.example.View;
 
-import org.example.Model.Requisicao;
-
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -52,10 +50,14 @@ public class MenuView {
             }
 
             case 5: {
+                RequisicaoView requisicaoView = new RequisicaoView();
+                requisicaoView.atenderRequisicao();
                 break;
             }
 
             case 6: {
+                RequisicaoView requisicaoView = new RequisicaoView();
+                requisicaoView.cancelarRequisicao();
                 break;
             }
 

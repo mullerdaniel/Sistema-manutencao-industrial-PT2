@@ -67,4 +67,84 @@ public class RequisicaoDAO {
             stmt.executeUpdate();
         }
     }
+
+
+    // LISTAR REQUISIÇÕES A SER ATENDIDA COM STATUS DEFINIDO COMO PENDENTE
+    public static List<Requisicao> listarRequisicoesComStatusPendente() throws SQLException {
+        List<Requisicao> requisicoes = new ArrayList<>();
+        String sql = "SELECT id, setor, dataSolicitacao, status FROM Requisicao WHERE status = 'PENDENTE'";
+
+        try(Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                Requisicao requisicao = new Requisicao(
+                        rs.getInt("id"),
+                        rs.getString("setor"),
+                        rs.getString("dataSolicitacao"),
+                        rs.getString("status")
+                );
+                requisicoes.add(requisicao);
+            }
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return requisicoes;
+    }
+
+
+    // BUSCAR ITENS DE UMA REQUISIÇÃO
+    public static List<RequisicaoItem> buscarItensRequisicao(int idRequisicao) throws SQLException {
+        // Busca os itens e o nome do material para exibição no View/Service
+        String query = "SELECT ri.idMaterial, ri.quantidade, m.nome FROM RequisicaoItem ri JOIN Material m ON ri.idMaterial = m.id WHERE ri.idRequisicao = ?";
+        List<RequisicaoItem> itens = new ArrayList<>();
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, idRequisicao);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    RequisicaoItem item = new RequisicaoItem(
+                            rs.getInt("idMaterial"),
+                            rs.getDouble("quantidade")
+                    );
+                    itens.add(item);
+                }
+            }
+        }
+        return itens;
+    }
+
+
+    // ATUALIZAR STATUS DA REQUISIÇÃO
+    public static void atualizarStatusRequisicao(int idRequisicao, String novoStatus) throws SQLException {
+        String query = "UPDATE Requisicao SET status = ? WHERE id = ?";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, novoStatus);
+            stmt.setInt(2, idRequisicao);
+            stmt.executeUpdate();
+        }
+    }
+
+
+    // NOVO METODO CANCELAR REQUISICAO
+    public void cancelarRequisicao(int idRequisicao) throws Exception {
+
+        try {
+            RequisicaoDAO.atualizarStatusRequisicao(idRequisicao, "CANCELADA");
+
+        } catch (SQLException e) {
+            throw new Exception("Falha ao tentar cancelar a requisição. Detalhes: " + e.getMessage(), e);
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }

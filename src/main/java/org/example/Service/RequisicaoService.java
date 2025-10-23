@@ -63,4 +63,55 @@ public class RequisicaoService {
 
         }
     }
+
+
+    // METODO PARA LISTAR ORDENS MANUTENÇÃO COM STATUS DEFINIDO COMO PENDENTE
+    public static List<Requisicao> listarRequisicoesComStatusPendente() throws SQLException {
+        return RequisicaoDAO.listarRequisicoesComStatusPendente();
+    }
+
+
+    public List<Requisicao> listarRequisicoesPendentes() throws SQLException {
+        return RequisicaoDAO.listarRequisicoesComStatusPendente();
+    }
+
+
+    // ATENDER REQUISIÇÃO
+    public void atenderRequisicao(int idRequisicao) throws Exception {
+
+        try {
+            List<RequisicaoItem> itens = RequisicaoDAO.buscarItensRequisicao(idRequisicao);
+
+            if (itens.isEmpty()) {
+                throw new Exception("Requisição não contém itens ou não existe.");
+            }
+
+            for (RequisicaoItem item : itens) {
+                MaterialDAO.subtrairEstoque(item.getIdMaterial(), item.getQuantidade());
+            }
+
+            RequisicaoDAO.atualizarStatusRequisicao(idRequisicao, "ATENDIDA");
+
+        } catch (SQLException e) {
+            throw new Exception("Falha no atendimento de requisição (Verifique se o estoque é suficiente). Detalhes: " + e.getMessage(), e);
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+
+    // NOVO METODO CANCELAR REQUISIÇÃO
+    public void cancelarRequisicao(int idRequisicao) throws Exception {
+
+        try {
+            RequisicaoDAO.atualizarStatusRequisicao(idRequisicao, "CANCELADA");
+
+        } catch (SQLException e) {
+            throw new Exception("Falha ao tentar cancelar a requisição. Detalhes: " + e.getMessage(), e);
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }

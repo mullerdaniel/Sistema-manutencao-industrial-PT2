@@ -78,6 +78,20 @@ public class MaterialDAO {
         }
         return materiais;
     }
+
+
+    // METODO PARA SUBTRAIR ESTOQUE
+    public static void subtrairEstoque(int idMaterial, double quantidade) throws SQLException {
+        String query = "UPDATE Material SET estoque = estoque - ? WHERE id = ?";
+
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setDouble(1, quantidade);
+            stmt.setInt(2, idMaterial);
+            stmt.executeUpdate();
+        }
+    }
 }
 
 
